@@ -8,7 +8,7 @@ In early implementations of TCP/IP, this bug is easy to exploit and can affect a
 
 And this source uses the ping on Windows to process the attack on a computer.
 
-#Steps:
+# Steps:
 
 1.Download the visual studio 2019
 2.Create a project the it has two files
@@ -17,5 +17,7 @@ And this source uses the ping on Windows to process the attack on a computer.
 Warning: This project is used for the Academic Research only. Do not use it for attacking other computers. I am not responsible for the illegal actions of other people who use this project. Thank you.
 
 Reference:
+
 [1] Ping of Death wikipedia (May 2022):https://en.wikipedia.org/wiki/Ping_of_death
+
 [2] C/C++ socket程式設計教程之三：Windows下的socket程式 (Febuary 2019):https://www.796t.com/content/1549136912.html
