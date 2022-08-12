@@ -11,12 +11,21 @@ And this source uses the ping on Windows to process the attack on a computer.
 # Steps:
 
 1.Download the visual studio 2019
+
 2.Create a project the it has two files
+
 3.Compile it.
+
+If you can not use the function, you have to follow this steps:
+
+1.Open your project
+
+2.Choose Project -> properties -> C/C++ -> SDL check -> No
 
 Warning: This project is used for the Academic Research only. Do not use it for attacking other computers. I am not responsible for the illegal actions of other people who use this project. Thank you.
 
-Reference:
+
+# Reference:
 
 [1] Ping of Death wikipedia (May 2022):https://en.wikipedia.org/wiki/Ping_of_death
 
