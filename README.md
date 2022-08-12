@@ -22,11 +22,14 @@ If you can not use the function, you have to follow this steps:
 
 2.Choose Project -> properties -> C/C++ -> SDL check -> No
 
-Warning: This project is used for the Academic Research only. Do not use it for attacking other computers. I am not responsible for all the illegal actions of other people who use this project. Thank you.
-
 
 # Reference:
 
 [1] Ping of Death wikipedia (May 2022):https://en.wikipedia.org/wiki/Ping_of_death
 
 [2] C/C++ socket程式設計教程之三：Windows下的socket程式 (Febuary 2019):https://www.796t.com/content/1549136912.html
+
+# Warning:
+This project is used for the Academic Research only. Do not use it for attacking other computers. I am not responsible for all the illegal actions of other people who use this project. Thank you.
+
+
