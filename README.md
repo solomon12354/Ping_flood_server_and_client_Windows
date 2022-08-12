@@ -22,7 +22,7 @@ If you can not use the function, you have to follow this steps:
 
 2.Choose Project -> properties -> C/C++ -> SDL check -> No
 
-Warning: This project is used for the Academic Research only. Do not use it for attacking other computers. I am not responsible for the illegal actions of other people who use this project. Thank you.
+Warning: This project is used for the Academic Research only. Do not use it for attacking other computers. I am not responsible for all the illegal actions of other people who use this project. Thank you.
 
 
 # Reference:
