@@ -29,6 +29,8 @@ If you can not use the function, you have to follow this steps:
 
 [2] C/C++ socket程式設計教程之三：Windows下的socket程式 (Febuary 2019):https://www.796t.com/content/1549136912.html
 
+[3] How can i create a multithread in C for windows? (December 2011):https://stackoverflow.com/questions/8446757/how-can-i-create-a-multithread-in-c-for-windows
+
 # Warning:
 This project is used for the Academic Research only. Do not use it for attacking other computers. I am not responsible for all the illegal actions of other people who use this project. Thank you.
 
