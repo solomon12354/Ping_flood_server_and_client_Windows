@@ -6,7 +6,7 @@ A correctly formed ping packet is typically 56 bytes in size, or 64 bytes when t
 
 In early implementations of TCP/IP, this bug is easy to exploit and can affect a wide variety of systems including Unix, Linux, Mac, Windows, and peripheral devices. As systems began filtering out pings of death through firewalls and other detection methods, a different kind of ping attack known as ping flooding later appeared, which floods the victim with so many ping requests that normal traffic fails to reach the system (a basic denial-of-service attack).
 
-And this source uses the ping on Windows to process the attack on a computer. But we use DHCP packet to ping the computer you want to attack.
+And this source uses the ping on Windows to process the attack on a computer. But we use ICMP packet to ping the computer you want to attack.
 
 # Steps:
 
