@@ -6,7 +6,7 @@
 #include <string.h>
 #include <time.h>
 #define NUM_THREADS 10    // Define number of threads here 
-#define THREADS_PERTIME 4 // Define number of threads per time here 
+#define THREADS_PERTIME 4 // Define number of running threads per time here 
 #pragma comment(lib, "ws2_32.lib")  //Load ws2_32.dll
 
 int hasConnected = 0;
