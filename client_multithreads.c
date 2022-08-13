@@ -5,7 +5,7 @@
 #include <wininet.h>
 #include <string.h>
 #include <time.h>
-#define NUM_THREADS 10    // Define number of threads here 
+#define NUM_THREADS 5     // Define number of threads here 
 #define THREADS_PERTIME 4 // Define number of running threads per time here 
 #pragma comment(lib, "ws2_32.lib")  //Load ws2_32.dll
 
