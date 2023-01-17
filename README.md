@@ -1,4 +1,4 @@
-# Ping_of_Death_server_and_client_Windows
+# Ping_flood_server_and_client_Windows
 
 A ping of death is a type of attack on a computer system that involves sending a malformed or otherwise malicious ping to a computer.
 
